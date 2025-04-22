@@ -58,7 +58,7 @@ namespace ErkenGame
             _obstacles.Add(new Rectangle(1500, 1300, 500, 300));
             _obstacles.Add(new Rectangle(2000, 1100, 250, 300));
 
-            // Устанавливаем уровень земли (нижняя часть экрана)
+            // Устанавливаем уровень земли
             _groundLevel = 1000;
             // Начальная позиция на земле
             _gameState = GameState.Menu;
@@ -124,7 +124,7 @@ namespace ErkenGame
                     _velocity.Y = _jumpSpeed;  // Начальная скорость прыжка
                 }
 
-                // Гравитация (всегда действует)
+                // Гравитация
                 _velocity.Y += _gravity * deltaTime;
 
                 // Применение скорости
@@ -199,7 +199,7 @@ namespace ErkenGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);  //  Цвет фона по умолчанию
+            GraphicsDevice.Clear(Color.CornflowerBlue);  //  Цвет фона
 
             _spriteBatch.Begin();
 
