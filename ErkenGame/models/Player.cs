@@ -20,17 +20,17 @@ namespace ErkenGame.Models
         private float _postAttackDelay =  10f; 
         private float _postAttackTimer = 0f; 
         private float _attackTimer = 0f;
-        private float _attackCooldown = 2f; // Время перезарядки атаки
-        private int _attackDamage = 40; // Урон от атаки
-        private int _health = 100; // Здоровье игрока
-        private float _damageCooldown = 1f; // Время перезарядки получения урона
-        // Добавляем анимации
+        private float _attackCooldown = 2f; // Г‚Г°ГҐГ¬Гї ГЇГҐГ°ГҐГ§Г Г°ГїГ¤ГЄГЁ Г ГІГ ГЄГЁ
+        private int _attackDamage = 40; // Г“Г°Г®Г­ Г®ГІ Г ГІГ ГЄГЁ
+        private int _health = 100; // Г‡Г¤Г®Г°Г®ГўГјГҐ ГЁГЈГ°Г®ГЄГ 
+        private float _damageCooldown = 1f; // Г‚Г°ГҐГ¬Гї ГЇГҐГ°ГҐГ§Г Г°ГїГ¤ГЄГЁ ГЇГ®Г«ГіГ·ГҐГ­ГЁГї ГіГ°Г®Г­Г 
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г Г­ГЁГ¬Г Г¶ГЁГЁ
         private Dictionary<string, Animation> _animations;
         private string _currentAnimation;
-        // Добавляем оружие
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г®Г°ГіГ¦ГЁГҐ
         public Weapon CurrentWeapon { get; private set; }
         private List<Weapon> _availableWeapons = new List<Weapon>();
-        // Добавляем систему здоровья
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г±ГЁГ±ГІГҐГ¬Гі Г§Г¤Г®Г°Г®ГўГјГї
         private float _healCooldown = 5f;
         private float _healTimer = 0f;
         private bool _canHeal = true;
@@ -63,14 +63,14 @@ namespace ErkenGame.Models
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyboardState = Keyboard.GetState();
 
-            // Обновляем анимацию в зависимости от состояния
+            // ГЋГЎГ­Г®ГўГ«ГїГҐГ¬ Г Г­ГЁГ¬Г Г¶ГЁГѕ Гў Г§Г ГўГЁГ±ГЁГ¬Г®Г±ГІГЁ Г®ГІ Г±Г®Г±ГІГ®ГїГ­ГЁГї
             if (!_isOnGround) _currentAnimation = "Jump";
             else if (Math.Abs(_velocity.X) > 0.1f) _currentAnimation = "Run";
             else _currentAnimation = "Idle";
 
             _animations[_currentAnimation].Update(gameTime);
 
-            // Система восстановления здоровья
+            // Г‘ГЁГ±ГІГҐГ¬Г  ГўГ®Г±Г±ГІГ Г­Г®ГўГ«ГҐГ­ГЁГї Г§Г¤Г®Г°Г®ГўГјГї
             if (!_canHeal)
             {
                 _healTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -92,11 +92,11 @@ namespace ErkenGame.Models
                 }
             }
 
-            // Атака
+            // ГЂГІГ ГЄГ 
             if (keyboardState.IsKeyDown(Keys.F) && !_isAttacking && _canAttack)
             {
                 _isAttacking = true;
-                _attackedThisFrame = false; // Сбрасываем флаг в начале новой атаки
+                _attackedThisFrame = false; // Г‘ГЎГ°Г Г±Г»ГўГ ГҐГ¬ ГґГ«Г ГЈ Гў Г­Г Г·Г Г«ГҐ Г­Г®ГўГ®Г© Г ГІГ ГЄГЁ
                 _attackTimer = _attackCooldown;
             }
 
@@ -106,12 +106,12 @@ namespace ErkenGame.Models
                 if (_attackTimer <= 0)
                 {
                     _isAttacking = false;
-                    _canAttack = false; // Запрещаем атаковать после завершения анимации атаки
-                    _postAttackTimer = _postAttackDelay; // Запускаем таймер задержки
+                    _canAttack = false; // Г‡Г ГЇГ°ГҐГ№Г ГҐГ¬ Г ГІГ ГЄГ®ГўГ ГІГј ГЇГ®Г±Г«ГҐ Г§Г ГўГҐГ°ГёГҐГ­ГЁГї Г Г­ГЁГ¬Г Г¶ГЁГЁ Г ГІГ ГЄГЁ
+                    _postAttackTimer = _postAttackDelay; // Г‡Г ГЇГіГ±ГЄГ ГҐГ¬ ГІГ Г©Г¬ГҐГ° Г§Г Г¤ГҐГ°Г¦ГЄГЁ
                 }
             }
 
-            // Горизонтальное движение
+            // ГѓГ®Г°ГЁГ§Г®Г­ГІГ Г«ГјГ­Г®ГҐ Г¤ГўГЁГ¦ГҐГ­ГЁГҐ
             float horizontalMovement = 0f;
             if (keyboardState.IsKeyDown(Keys.A))
                 horizontalMovement -= 1;
@@ -120,7 +120,7 @@ namespace ErkenGame.Models
 
             _velocity.X = horizontalMovement * _playerSpeed;
 
-            // Прыжок
+            // ГЏГ°Г»Г¦Г®ГЄ
             if (keyboardState.IsKeyDown(Keys.Space) && _isOnGround)
             {
                 _velocity.Y = _jumpSpeed;
@@ -133,49 +133,49 @@ namespace ErkenGame.Models
                 _damageTimer -= deltaTime;
             }
 
-            // Гравитация
+            // ГѓГ°Г ГўГЁГІГ Г¶ГЁГї
             _velocity.Y += _gravity * deltaTime;
 
-            // Применение скорости
+            // ГЏГ°ГЁГ¬ГҐГ­ГҐГ­ГЁГҐ Г±ГЄГ®Г°Г®Г±ГІГЁ
             Vector2 newPosition = Position + _velocity * deltaTime;
 
-            // Обновляем прямоугольник персонажа для проверок столкновений
+            // ГЋГЎГ­Г®ГўГ«ГїГҐГ¬ ГЇГ°ГїГ¬Г®ГіГЈГ®Г«ГјГ­ГЁГЄ ГЇГҐГ°Г±Г®Г­Г Г¦Г  Г¤Г«Гї ГЇГ°Г®ГўГҐГ°Г®ГЄ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГ©
             Rectangle playerRect = new Rectangle((int)newPosition.X, (int)newPosition.Y, Texture.Width, Texture.Height);
 
-            // Обработка столкновений с препятствиями
+            // ГЋГЎГ°Г ГЎГ®ГІГЄГ  Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГ© Г± ГЇГ°ГҐГЇГїГІГ±ГІГўГЁГїГ¬ГЁ
             _isOnGround = false;
             foreach (Obstacle obstacle in obstacles)
             {
-                // Сначала, проверка сверху
+                // Г‘Г­Г Г·Г Г«Г , ГЇГ°Г®ГўГҐГ°ГЄГ  Г±ГўГҐГ°ГµГі
                 if (_velocity.Y >= 0 &&
                     playerRect.Bottom >= obstacle.Rectangle.Top &&
                     Position.Y + Texture.Height <= obstacle.Rectangle.Top &&
                     playerRect.Right > obstacle.Rectangle.Left &&
                     playerRect.Left < obstacle.Rectangle.Right)
                 {
-                    // Мы приземлились на платформу
+                    // ГЊГ» ГЇГ°ГЁГ§ГҐГ¬Г«ГЁГ«ГЁГ±Гј Г­Г  ГЇГ«Г ГІГґГ®Г°Г¬Гі
                     newPosition.Y = obstacle.Rectangle.Top - Texture.Height;
                     _velocity.Y = 0;
                     _isOnGround = true;
                     _isJumping = false;
                 }
-                // Затем, проверка снизу
+                // Г‡Г ГІГҐГ¬, ГЇГ°Г®ГўГҐГ°ГЄГ  Г±Г­ГЁГ§Гі
                 else if (_velocity.Y <= 0 &&
                          playerRect.Top <= obstacle.Rectangle.Bottom &&
                          Position.Y >= obstacle.Rectangle.Bottom &&
                          playerRect.Right > obstacle.Rectangle.Left &&
                          playerRect.Left < obstacle.Rectangle.Right)
                 {
-                    // Ударяемся головой об платформу
+                    // Г“Г¤Г Г°ГїГҐГ¬Г±Гї ГЈГ®Г«Г®ГўГ®Г© Г®ГЎ ГЇГ«Г ГІГґГ®Г°Г¬Гі
                     newPosition.Y = obstacle.Rectangle.Bottom;
                     _velocity.Y = 0;
                 }
-                // Затем, проверка сбоку
+                // Г‡Г ГІГҐГ¬, ГЇГ°Г®ГўГҐГ°ГЄГ  Г±ГЎГ®ГЄГі
                 else if (newPosition.X + Texture.Width > obstacle.Rectangle.Left && Position.X + Texture.Width <= obstacle.Rectangle.Left &&
                          playerRect.Bottom > obstacle.Rectangle.Top &&
                          playerRect.Top < obstacle.Rectangle.Bottom)
                 {
-                    // Столкновение сбоку справа
+                    // Г‘ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ Г±ГЎГ®ГЄГі Г±ГЇГ°Г ГўГ 
                     newPosition.X = obstacle.Rectangle.Left - Texture.Width;
                     _velocity.X = 0;
                 }
@@ -183,7 +183,7 @@ namespace ErkenGame.Models
                          playerRect.Bottom > obstacle.Rectangle.Top &&
                          playerRect.Top < obstacle.Rectangle.Bottom)
                 {
-                    // Столкновение сбоку слева
+                    // Г‘ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГҐ Г±ГЎГ®ГЄГі Г±Г«ГҐГўГ 
                     newPosition.X = obstacle.Rectangle.Right;
                     _velocity.X = 0;
                 }
@@ -204,35 +204,35 @@ namespace ErkenGame.Models
                 }
             }
 
-            // Проверка столкновений с зомби
+            // ГЏГ°Г®ГўГҐГ°ГЄГ  Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГ© Г± Г§Г®Г¬ГЎГЁ
          
             foreach (Zombie zombie in zombies)
             {
                 Rectangle zombieRect = zombie.GetRectangle();
                 if (playerRect.Intersects(zombieRect))
                 {
-                    // Если игрок атакует и еще не нанес урон в этом кадре, наносим урон зомби
+                    // Г…Г±Г«ГЁ ГЁГЈГ°Г®ГЄ Г ГІГ ГЄГіГҐГІ ГЁ ГҐГ№ГҐ Г­ГҐ Г­Г Г­ГҐГ± ГіГ°Г®Г­ Гў ГЅГІГ®Г¬ ГЄГ Г¤Г°ГҐ, Г­Г Г­Г®Г±ГЁГ¬ ГіГ°Г®Г­ Г§Г®Г¬ГЎГЁ
                     if (_isAttacking && !_attackedThisFrame)
                     {
                         zombie.TakeDamage(_attackDamage);
-                        _attackedThisFrame = true; // Устанавливаем флаг, чтобы больше не наносить урон в этом кадре
+                        _attackedThisFrame = true; // Г“Г±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГ¬ ГґГ«Г ГЈ, Г·ГІГ®ГЎГ» ГЎГ®Г«ГјГёГҐ Г­ГҐ Г­Г Г­Г®Г±ГЁГІГј ГіГ°Г®Г­ Гў ГЅГІГ®Г¬ ГЄГ Г¤Г°ГҐ
                     }
-                    // Если игрок не атакует и таймер перезарядки прошел, получаем урон от зомби
+                    // Г…Г±Г«ГЁ ГЁГЈГ°Г®ГЄ Г­ГҐ Г ГІГ ГЄГіГҐГІ ГЁ ГІГ Г©Г¬ГҐГ° ГЇГҐГ°ГҐГ§Г Г°ГїГ¤ГЄГЁ ГЇГ°Г®ГёГҐГ«, ГЇГ®Г«ГіГ·Г ГҐГ¬ ГіГ°Г®Г­ Г®ГІ Г§Г®Г¬ГЎГЁ
                     else if (_damageTimer <= 0)
                     {
                         TakeDamage(30); 
-                        _damageTimer = _damageCooldown; // Запускаем таймер перезарядки
+                        _damageTimer = _damageCooldown; // Г‡Г ГЇГіГ±ГЄГ ГҐГ¬ ГІГ Г©Г¬ГҐГ° ГЇГҐГ°ГҐГ§Г Г°ГїГ¤ГЄГЁ
                     }
                 }
             }
-            //Ограничение падения вниз
+            //ГЋГЈГ°Г Г­ГЁГ·ГҐГ­ГЁГҐ ГЇГ Г¤ГҐГ­ГЁГї ГўГ­ГЁГ§
             if (newPosition.Y > _groundLevel)
                 newPosition.Y = _groundLevel;
 
-            //Применяем новую позицию
+            //ГЏГ°ГЁГ¬ГҐГ­ГїГҐГ¬ Г­Г®ГўГіГѕ ГЇГ®Г§ГЁГ¶ГЁГѕ
             Position = newPosition;
 
-            // Обновляем _isOnGround, если нет столкновений
+            // ГЋГЎГ­Г®ГўГ«ГїГҐГ¬ _isOnGround, ГҐГ±Г«ГЁ Г­ГҐГІ Г±ГІГ®Г«ГЄГ­Г®ГўГҐГ­ГЁГ©
             if (Position.Y == _groundLevel)
                 _isOnGround = true;
         }
@@ -242,9 +242,8 @@ namespace ErkenGame.Models
             _health -= damage;
             if (_health <= 0)
             {
-                // Игрок умер
+                // Г€ГЈГ°Г®ГЄ ГіГ¬ГҐГ°
                 _health = 0;
-                // TODO: Добавьте логику смерти игрока (например, перезапуск уровня)
             }
         }
         public int GetHealth()
