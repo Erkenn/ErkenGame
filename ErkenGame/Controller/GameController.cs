@@ -36,7 +36,7 @@ namespace ErkenGame.Controllers
             _gameState = GameState.Menu;
             _obstacles = new List<Obstacle>();
 
-            // Создание препятствий (теперь через модель)
+            // Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЇГ°ГҐГЇГїГІГ±ГІГўГЁГ© (ГІГҐГЇГҐГ°Гј Г·ГҐГ°ГҐГ§ Г¬Г®Г¤ГҐГ«Гј)
             _obstacles.Add(new Obstacle(1500, 1300, 500, 300));
             _obstacles.Add(new Obstacle(2000, 1100, 250, 300));
             _zombies = new List<Zombie>();
@@ -51,15 +51,15 @@ namespace ErkenGame.Controllers
             _buttonTexture = content.Load<Texture2D>("button");
             _backgroundTexture = content.Load<Texture2D>("background");
             _font = content.Load<SpriteFont>("Font");
-            Texture2D playerTexture = content.Load<Texture2D>("Character"); // Загрузка текстуры игрока
-            _zombieTexture = content.Load<Texture2D>("Zombie"); // Загрузка текстуры зомби
+            Texture2D playerTexture = content.Load<Texture2D>("Character"); // Г‡Г ГЈГ°ГіГ§ГЄГ  ГІГҐГЄГ±ГІГіГ°Г» ГЁГЈГ°Г®ГЄГ 
+            _zombieTexture = content.Load<Texture2D>("Zombie"); // Г‡Г ГЈГ°ГіГ§ГЄГ  ГІГҐГЄГ±ГІГіГ°Г» Г§Г®Г¬ГЎГЁ
 
-            _player = new Player(new Vector2(100, 100), playerTexture); // Создание экземпляра игрока
-            _zombies.Add(new Zombie(new Vector2(500, 100), _zombieTexture)); // Создание экземпляра зомби
+            _player = new Player(new Vector2(100, 100), playerTexture); // Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ°Г  ГЁГЈГ°Г®ГЄГ 
+            _zombies.Add(new Zombie(new Vector2(500, 100), _zombieTexture)); // Г‘Г®Г§Г¤Г Г­ГЁГҐ ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ°Г  Г§Г®Г¬ГЎГЁ
             _player.LoadAnimations(content);
             _gameView = new GameView(content);
 
-            // Определение позиции и размера кнопки
+            // ГЋГЇГ°ГҐГ¤ГҐГ«ГҐГ­ГЁГҐ ГЇГ®Г§ГЁГ¶ГЁГЁ ГЁ Г°Г Г§Г¬ГҐГ°Г  ГЄГ­Г®ГЇГЄГЁ
             int buttonWidth = 400;
             int buttonHeight = 100;
             int buttonX = (_screenWidth - buttonWidth) / 2;
@@ -68,9 +68,9 @@ namespace ErkenGame.Controllers
             _restartButtonRectangle = new Rectangle(buttonX, buttonY, buttonWidth, buttonHeight);
             _buttonRectangle = new Rectangle(buttonX, buttonY, buttonWidth, buttonHeight);
 
-            _gameView.LoadContent(content); // Загружаем текстуры в GameView
+            _gameView.LoadContent(content); // Г‡Г ГЈГ°ГіГ¦Г ГҐГ¬ ГІГҐГЄГ±ГІГіГ°Г» Гў GameView
 
-            _camera = new Camera(_graphicsDevice.Viewport); // Инициализируем камеру
+            _camera = new Camera(_graphicsDevice.Viewport); // Г€Г­ГЁГ¶ГЁГ Г«ГЁГ§ГЁГ°ГіГҐГ¬ ГЄГ Г¬ГҐГ°Гі
         }
 
 
@@ -89,19 +89,19 @@ namespace ErkenGame.Controllers
                 _camera.Update(_player.Position);
                 _player.Update(gameTime, _obstacles, _zombies);
 
-                // Проверка смерти игрока
+                // ГЏГ°Г®ГўГҐГ°ГЄГ  Г±Г¬ГҐГ°ГІГЁ ГЁГЈГ°Г®ГЄГ 
                 if (_player.GetHealth() <= 0)
                 {
                     _gameState = GameState.GameOver;
                 }
 
-                // Обновляем зомби
+                // ГЋГЎГ­Г®ГўГ«ГїГҐГ¬ Г§Г®Г¬ГЎГЁ
                 for (int i = _zombies.Count - 1; i >= 0; i--)
                 {
                     Zombie zombie = _zombies[i];
                     zombie.Update(gameTime, _player, _obstacles);
 
-                    // Если зомби мертв, удаляем его из списка
+                    // Г…Г±Г«ГЁ Г§Г®Г¬ГЎГЁ Г¬ГҐГ°ГІГў, ГіГ¤Г Г«ГїГҐГ¬ ГҐГЈГ® ГЁГ§ Г±ГЇГЁГ±ГЄГ 
                     if (zombie.GetHealth() <= 0)
                     {
                         _zombies.RemoveAt(i);
@@ -110,12 +110,13 @@ namespace ErkenGame.Controllers
             }
             else if (_gameState == GameState.GameOver)
             {
-                // TODO: Добавьте логику для кнопки "Попробовать еще раз"
+                // TODO: Г„Г®ГЎГ ГўГјГІГҐ Г«Г®ГЈГЁГЄГі Г¤Г«Гї ГЄГ­Г®ГЇГЄГЁ "ГЏГ®ГЇГ°Г®ГЎГ®ГўГ ГІГј ГҐГ№ГҐ Г°Г Г§"
                 MouseState mouseState = Mouse.GetState();
                 if (mouseState.LeftButton == ButtonState.Pressed && _restartButtonRectangle.Contains(mouseState.X, mouseState.Y))
                 {
-                    // Перезапуск игры
+                    // ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГЁГЈГ°Г»
                     ResetGame();
+                    _player.LoadAnimations(content);
                     _gameState = GameState.Playing;
                 }
             }
@@ -123,16 +124,16 @@ namespace ErkenGame.Controllers
         }
         private void ResetGame()
         {
-            // Сбрасываем здоровье игрока
+            // Г‘ГЎГ°Г Г±Г»ГўГ ГҐГ¬ Г§Г¤Г®Г°Г®ГўГјГҐ ГЁГЈГ°Г®ГЄГ 
             _player = new Player(new Vector2(100, 100), content.Load<Texture2D>("Character"));
 
-            // Очищаем список зомби и создаем нового зомби
+            // ГЋГ·ГЁГ№Г ГҐГ¬ Г±ГЇГЁГ±Г®ГЄ Г§Г®Г¬ГЎГЁ ГЁ Г±Г®Г§Г¤Г ГҐГ¬ Г­Г®ГўГ®ГЈГ® Г§Г®Г¬ГЎГЁ
             _zombies.Clear();
             _zombies.Add(new Zombie(new Vector2(500, 100), content.Load<Texture2D>("Zombie")));
 
-            // TODO: Сбросьте другие параметры игры (например, позицию камеры, препятствия)
+            // TODO: Г‘ГЎГ°Г®Г±ГјГІГҐ Г¤Г°ГіГЈГЁГҐ ГЇГ Г°Г Г¬ГҐГІГ°Г» ГЁГЈГ°Г» (Г­Г ГЇГ°ГЁГ¬ГҐГ°, ГЇГ®Г§ГЁГ¶ГЁГѕ ГЄГ Г¬ГҐГ°Г», ГЇГ°ГҐГЇГїГІГ±ГІГўГЁГї)
 
-            // Возвращаем камеру в начальное положение (примерно)
+            // Г‚Г®Г§ГўГ°Г Г№Г ГҐГ¬ ГЄГ Г¬ГҐГ°Гі Гў Г­Г Г·Г Г«ГјГ­Г®ГҐ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГҐ (ГЇГ°ГЁГ¬ГҐГ°Г­Г®)
             _camera = new Camera(_graphicsDevice.Viewport);
         }
 
@@ -142,18 +143,18 @@ namespace ErkenGame.Controllers
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // В GameController
+            // Г‚ GameController
             _gameView.Draw(spriteBatch, _player, _obstacles);
-            // Рисуем фон
+            // ГђГЁГ±ГіГҐГ¬ ГґГ®Г­
             spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, _screenWidth, _screenHeight), Color.White);
 
             if (_gameState == GameState.Menu)
             {
-                // Рисуем кнопку
+                // ГђГЁГ±ГіГҐГ¬ ГЄГ­Г®ГЇГЄГі
                 spriteBatch.Draw(_buttonTexture, _buttonRectangle, Color.White);
 
-                // Рисуем текст на кнопке
-                string buttonText = "Играть";
+                // ГђГЁГ±ГіГҐГ¬ ГІГҐГЄГ±ГІ Г­Г  ГЄГ­Г®ГЇГЄГҐ
+                string buttonText = "Г€ГЈГ°Г ГІГј";
                 Vector2 textSize = _font.MeasureString(buttonText);
                 Vector2 textPosition = new Vector2(
                     _buttonRectangle.X + (_buttonRectangle.Width - textSize.X) / 2,
@@ -163,7 +164,7 @@ namespace ErkenGame.Controllers
             }
             else if (_gameState == GameState.Playing)
             {
-                spriteBatch.End(); //закрываем спрайтбатч
+                spriteBatch.End(); //Г§Г ГЄГ°Г»ГўГ ГҐГ¬ Г±ГЇГ°Г Г©ГІГЎГ ГІГ·
                 spriteBatch.Begin(transformMatrix: _camera.Transform);
 
                 _gameView.Draw(spriteBatch, _player, _obstacles);
@@ -173,26 +174,26 @@ namespace ErkenGame.Controllers
                     zombie.Draw(spriteBatch);
                 }
 
-                spriteBatch.End();// закрываем спрайтбатч с камерой
-                spriteBatch.Begin(); //открываем спрайтбатч без камеры
+                spriteBatch.End();// Г§Г ГЄГ°Г»ГўГ ГҐГ¬ Г±ГЇГ°Г Г©ГІГЎГ ГІГ· Г± ГЄГ Г¬ГҐГ°Г®Г©
+                spriteBatch.Begin(); //Г®ГІГЄГ°Г»ГўГ ГҐГ¬ Г±ГЇГ°Г Г©ГІГЎГ ГІГ· ГЎГҐГ§ ГЄГ Г¬ГҐГ°Г»
             }
 
             else if (_gameState == GameState.GameOver)
             {
-                // Рисуем экран "Игра окончена"
-                string gameOverText = "Игра окончена";
+                // ГђГЁГ±ГіГҐГ¬ ГЅГЄГ°Г Г­ "Г€ГЈГ°Г  Г®ГЄГ®Г­Г·ГҐГ­Г "
+                string gameOverText = "Г€ГЈГ°Г  Г®ГЄГ®Г­Г·ГҐГ­Г ";
                 Vector2 textSize = _font.MeasureString(gameOverText);
                 Vector2 textPosition = new Vector2(
                     (_screenWidth - textSize.X) / 2,
-                    (_screenHeight - textSize.Y) / 2 - 50); // Сдвигаем текст немного вверх
+                    (_screenHeight - textSize.Y) / 2 - 150); // Г‘Г¤ГўГЁГЈГ ГҐГ¬ ГІГҐГЄГ±ГІ Г­ГҐГ¬Г­Г®ГЈГ® ГўГўГҐГ°Гµ
 
                 spriteBatch.DrawString(_font, gameOverText, textPosition, Color.Red);
 
-                // Рисуем кнопку "Попробовать еще раз"
+                // ГђГЁГ±ГіГҐГ¬ ГЄГ­Г®ГЇГЄГі "ГЏГ®ГЇГ°Г®ГЎГ®ГўГ ГІГј ГҐГ№ГҐ Г°Г Г§"
                 spriteBatch.Draw(_buttonTexture, _restartButtonRectangle, Color.White);
 
-                // Рисуем текст на кнопке
-                string buttonText = "Попробовать еще раз";
+                // ГђГЁГ±ГіГҐГ¬ ГІГҐГЄГ±ГІ Г­Г  ГЄГ­Г®ГЇГЄГҐ
+                string buttonText = "ГЏГ®ГЇГ°Г®ГЎГ®ГўГ ГІГј ГҐГ№ГҐ Г°Г Г§";
                 Vector2 buttonTextSize = _font.MeasureString(buttonText);
                 Vector2 buttonTextPosition = new Vector2(
                     _restartButtonRectangle.X + (_restartButtonRectangle.Width - buttonTextSize.X) / 2,
