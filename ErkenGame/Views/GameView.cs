@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using ErkenGame.Models;
+using System;
 
 namespace ErkenGame.Views
 {
@@ -24,14 +25,44 @@ namespace ErkenGame.Views
 
         public void Draw(SpriteBatch spriteBatch, Player player, List<Obstacle> obstacles)
         {
-            player.Draw(spriteBatch); // Рисуем игрока, вызывая Draw из Player
-                                      // Рисуем препятствия
+            // Отрисовка игрока
+            player.Draw(spriteBatch);
+
+            // Отрисовка препятствий с правильным масштабированием
             foreach (Obstacle obstacle in obstacles)
             {
-                spriteBatch.Draw(_obstacleTexture, obstacle.Rectangle, Color.White);
+                // Рассчитываем нужное количество повторений текстуры
+                int repeatX = (int)Math.Ceiling((float)obstacle.Rectangle.Width / _obstacleTexture.Width);
+                int repeatY = (int)Math.Ceiling((float)obstacle.Rectangle.Height / _obstacleTexture.Height);
+
+                for (int x = 0; x < repeatX; x++)
+                {
+                    for (int y = 0; y < repeatY; y++)
+                    {
+                        Rectangle destRect = new Rectangle(
+                            obstacle.Rectangle.X + x * _obstacleTexture.Width,
+                            obstacle.Rectangle.Y + y * _obstacleTexture.Height,
+                            Math.Min(_obstacleTexture.Width, obstacle.Rectangle.Width - x * _obstacleTexture.Width),
+                            Math.Min(_obstacleTexture.Height, obstacle.Rectangle.Height - y * _obstacleTexture.Height));
+
+                        spriteBatch.Draw(
+                            _obstacleTexture,
+                            destRect,
+                            null,
+                            Color.White);
+                    }
+                }
             }
         }
 
+        public void DrawRectangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color)
+        {
+            Texture2D dummyTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            dummyTexture.SetData(new Color[] { Color.White }); // Заполняем текстуру белым цветом
 
+            spriteBatch.Draw(dummyTexture, rectangle, color);
+
+            dummyTexture.Dispose();
+        }
     }
 }

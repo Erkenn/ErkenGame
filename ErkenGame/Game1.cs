@@ -54,13 +54,14 @@ namespace ErkenGame
 
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(); // Начинаем SpriteBatch только здесь
+            _spriteBatch.Begin();
 
-            _gameController.Draw(_spriteBatch); // Передаем SpriteBatch для отрисовки
+            _gameController.Draw(_spriteBatch);
 
-            _spriteBatch.End(); // Заканчиваем SpriteBatch только здесь
+            _spriteBatch.End(); 
 
             base.Draw(gameTime);
         }
+
     }
 }
